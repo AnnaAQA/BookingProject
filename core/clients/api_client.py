@@ -2,9 +2,11 @@ import requests
 import os
 import allure
 
+
 from dotenv import load_dotenv
 from requests import session
 from requests.auth import HTTPBasicAuth
+from dataclasses import dataclass
 
 from core.settings.environments import Environment
 from core.clients.endpoints import Endpoints
@@ -63,7 +65,7 @@ class APIClient:
     def auth(self):
         with allure.step('Get auth token'):
             url = f"{self.base_url}{Endpoints.AUTH_ENDPOINT.value}"
-            payload = {"username": Users.USERNAME, "password": Users.PASSWORD}
+            payload = {"username": Users.USERNAME.value, "password": Users.PASSWORD.value}
             response = self.session.post(url, json=payload, timeout=Timeouts.Timeout.value)
             response.raise_for_status()
         with allure.step('Checking status code'):
@@ -85,7 +87,7 @@ class APIClient:
     def delete_booking(self, booking_id):
         with allure.step('Delete booking by ID'):
             url = f"{self.base_url}{Endpoints.BOOKING_ENDPOINT.value}/{booking_id}"
-            response = self.session.delete(url, auth=HTTPBasicAuth(Users.USERNAME, Users.PASSWORD))
+            response = self.session.delete(url, auth=HTTPBasicAuth(Users.USERNAME.value, Users.PASSWORD.value))
             response.raise_for_status()
         with allure.step('Checking status code'):
             assert response.status_code == 201, f"Expected status code 201, but got {response.status_code}"
@@ -112,7 +114,7 @@ class APIClient:
     def update_booking(self, booking_id, booking_data):
         with allure.step('Update booking by ID'):
             url = f"{self.base_url}{Endpoints.BOOKING_ENDPOINT.value}/{booking_id}"
-            response = self.session.put(url, json=booking_data, auth=HTTPBasicAuth(Users.USERNAME, Users.PASSWORD))
+            response = self.session.put(url, json=booking_data, auth=HTTPBasicAuth(Users.USERNAME.value, Users.PASSWORD.value))
             response.raise_for_status()
         with allure.step('Checking status code'):
             assert response.status_code == 200, f"Expected status code 200, but got {response.status_code}"
@@ -121,7 +123,7 @@ class APIClient:
     def partial_update_booking(self, booking_id, booking_data):
         with allure.step('Partially update booking by ID'):
             url = f"{self.base_url}{Endpoints.BOOKING_ENDPOINT.value}/{booking_id}"
-            response = self.session.patch(url, json=booking_data, auth=HTTPBasicAuth(Users.USERNAME, Users.PASSWORD))
+            response = self.session.patch(url, json=booking_data, auth=HTTPBasicAuth(Users.USERNAME.value, Users.PASSWORD.value))
             response.raise_for_status()
         with allure.step('Checking status code'):
             assert response.status_code == 200, f"Expected status code 200, but got {response.status_code}"
