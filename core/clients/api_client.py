@@ -126,16 +126,3 @@ class APIClient:
         with allure.step('Checking status code'):
             assert response.status_code == 200, f"Expected status code 200, but got {response.status_code}"
         return response.json()
-data = {
-    "firstname" : "Jim",
-    "lastname" : "Brown",
-    "totalprice" : 111,
-    "depositpaid" : True,
-    "bookingdates" : {
-        "checkin" : "2018-01-01",
-        "checkout" : "2019-01-01"
-    },
-    "additionalneeds" : "Breakfast"
-}
-cliеnt_anna= APIClient()
-print(cliеnt_anna.get_booking_by_id(1))
