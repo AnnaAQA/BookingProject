@@ -6,4 +6,4 @@ import pytest
 @allure.story('Test connection')
 def test_ping(api_client):
     status_code = api_client.ping()
-    assert status_code == 201, f"Expected status code 200, but got {status_code}"
+    assert status_code == 201, f"Expected status code 201, but got {status_code}"
