@@ -8,7 +8,7 @@ from faker import Faker
 def api_client():
     client = APIClient()
     client.auth()
-    return
+    return client
 
 @pytest.fixture()
 def booking_dates():
