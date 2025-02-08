@@ -52,8 +52,3 @@ def test_create_booking_with_random_data(api_client, generate_random_booking_dat
     assert response['booking']['bookingdates']['checkin'] == generate_random_booking_data['bookingdates']['checkin']
     assert response['booking']['bookingdates']['checkout'] == generate_random_booking_data['bookingdates']['checkout']
     assert response['booking']['additionalneeds'] == generate_random_booking_data['additionalneeds']
-
-def test_create_booking_without_firstname(api_client, generate_random_booking_data_without_firstname):
-
-    response = api_client.create_booking(generate_random_booking_data_without_firstname)
-    print(response)
