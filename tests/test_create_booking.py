@@ -1,5 +1,8 @@
 import allure
+import pytest
 from pydantic import ValidationError
+from requests import HTTPError
+
 from core.models.booking import BookingResponse
 
 
@@ -52,3 +55,8 @@ def test_create_booking_with_random_data(api_client, generate_random_booking_dat
     assert response['booking']['bookingdates']['checkin'] == generate_random_booking_data['bookingdates']['checkin']
     assert response['booking']['bookingdates']['checkout'] == generate_random_booking_data['bookingdates']['checkout']
     assert response['booking']['additionalneeds'] == generate_random_booking_data['additionalneeds']
+
+@allure.story('Negative: create booking with random data without required firstname')
+def test_create_booking_with_random_data_without_firstname(api_client, generate_random_booking_data_without_firstname):
+    with pytest.raises(HTTPError):
+        api_client.create_booking(generate_random_booking_data_without_firstname)
